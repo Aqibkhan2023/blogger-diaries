@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.fields import TextField
 from django.utils.text import slugify
 from froala_editor.fields import FroalaField
 
@@ -13,7 +14,7 @@ class Category(models.Model):
 
 class Blog(models.Model):
     title = models.CharField(max_length=250)
-    content = FroalaField()
+    content = TextField()#FroalaField()
     slug = models.SlugField(max_length=1000)
     createdAt = models.DateTimeField(auto_now_add=True)
     lastEdited = models.DateTimeField(auto_now=True)
@@ -40,6 +41,9 @@ class Comment(models.Model):
     timePosted = models.DateTimeField(auto_now_add=True)
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = ("-timePosted",)
+
     def __str__(self):
         return f'Comment Author: {self.userName}'
 
@@ -52,3 +56,9 @@ class Image(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# get all ----------------------------------------done [(Pagination) query limit, offset]   
+# get particlu :id -------------------------------done
+# get comments on a blog (blog id)
+# create comment (blog id)
