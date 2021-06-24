@@ -1,4 +1,7 @@
 from django.db import models
+from django.utils.text import slugify
+from froala_editor.fields import FroalaField
+
 
 
 class Category(models.Model):
@@ -10,7 +13,7 @@ class Category(models.Model):
 
 class Blog(models.Model):
     title = models.CharField(max_length=250)
-    content = models.TextField()
+    content = FroalaField()
     slug = models.SlugField(max_length=1000)
     createdAt = models.DateTimeField(auto_now_add=True)
     lastEdited = models.DateTimeField(auto_now=True)
@@ -23,10 +26,16 @@ class Blog(models.Model):
 
     def __str__(self):
         return f'Title: {self.title} Author: {self.authorName}'
+    
+    def save(self, *args, **kwargs):
+        if not self.slug and self.title:
+            # will remove spaces in the product name and replace it with hyphen/ underscore
+            self.slug = slugify(self.title)
+        super(Blog, self).save(*args, **kwargs)
 
 
 class Comment(models.Model):
-    content = models.TextField()
+    content = FroalaField()
     userName = models.CharField(max_length=100)
     timePosted = models.DateTimeField(auto_now_add=True)
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
