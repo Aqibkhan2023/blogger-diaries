@@ -33,7 +33,7 @@ class CommentView(APIView):
         return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
-        commentDetails = request.data
+        commentDetails = request.data.copy()
         commentDetails['blog'] = self.kwargs['blog_id']
         serializer = CommentSerializer(data=commentDetails)
         if serializer.is_valid():
