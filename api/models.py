@@ -1,8 +1,8 @@
 from django.db import models
 from django.db.models.fields import TextField
 from django.utils.text import slugify
-from froala_editor.fields import FroalaField
-
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class Category(models.Model):
@@ -14,12 +14,12 @@ class Category(models.Model):
 
 class Blog(models.Model):
     title = models.CharField(max_length=250)
-    content = TextField()#FroalaField()
+    content = RichTextUploadingField()
     slug = models.SlugField(max_length=1000)
     createdAt = models.DateTimeField(auto_now_add=True)
     lastEdited = models.DateTimeField(auto_now=True)
     publishedAt = models.DateTimeField(blank=True, null=True)
-    authorName = models.CharField(max_length=100)
+    authorName = models.CharField(max_length=50)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     class Meta:
@@ -36,8 +36,8 @@ class Blog(models.Model):
 
 
 class Comment(models.Model):
-    content = FroalaField()
-    userName = models.CharField(max_length=100)
+    content = RichTextUploadingField()
+    userName = models.CharField(max_length=50)
     timePosted = models.DateTimeField(auto_now_add=True)
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
 
@@ -55,7 +55,7 @@ class Image(models.Model):
     blog = models.ForeignKey(Blog, default=None, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return self.name + self.imageType
 
 
 # get all ----------------------------------------done [(Pagination) query limit, offset]   
