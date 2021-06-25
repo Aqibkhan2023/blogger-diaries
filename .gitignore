@@ -142,28 +142,12 @@ cython_debug/
 blog/.env
 
 
-
 *.egg-info
 *.pyc
-*.swp
-.installed.cfg
-/bin/
-/develop-eggs/
-/eggs/
-/parts/
-/ckeditor.db
-ve/
-django-ckeditor.sublime-workspace
-django-ckeditor.sublime-project
-*.DS_Store
-*.egg
-pep8.txt
-coverage.xml
-db.sqlite3
-.tox/
+.DS_Store
+*.sqlite
 .coverage
-.coverage.*
-.idea
-venv
-/build
-/dist
+.venv/
+__pycache__/
+.tox/
+coverage.xml
