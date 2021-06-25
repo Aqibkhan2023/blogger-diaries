@@ -50,31 +50,9 @@ class CommentDetailView(APIView):
         serializer = CommentSerializer(comment)
         return Response(serializer.data)
         
-
-
-
-# #                                  Custom Pagination                                        #
-
-# class CustomPagination(PageNumberPagination):
-#     page_size = 10
-#     def get_paginated_response(self, data):
-#         return Response({
-#             "status": True,
-#             "code": status.HTTP_200_OK,
-#             'next': self.get_next_link(),
-#             'previous': self.get_previous_link(),
-#             'count': self.count,
-#             'results': data
-#         })
-# class AppBlogListView(APIView):
-#     queryset = Blog.objects.all()
-#     serializer_class = BlogSerializer
-#     pagination_class = CustomPagination
-#     def get(self, request):
-#         queryset = self.filter_queryset(self.get_queryset())
-#         page = self.paginate_queryset(queryset)
-#         if page is not None:
-#             serializer = self.get_serializer(page, many=True)
-#             return self.get_paginated_response(serializer.data)
-#         serializer = self.get_serializer(queryset, many=True)
-#         return Response(serializer.data)   
+class AppBlogListView(APIView): # Pagination
+    def get(self, request, pageno):
+        page_size = 10
+        queryset = Blog.objects.all().order_by("-timePosted")[page_size*pageno: page_size*pageno + page_size]
+        serializer = BlogSerializer(queryset, many=True)
+        return Response(serializer.data)
