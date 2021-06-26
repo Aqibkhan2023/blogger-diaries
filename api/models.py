@@ -19,7 +19,7 @@ class Blog(models.Model):
     createdAt = models.DateTimeField(auto_now_add=True)
     lastEdited = models.DateTimeField(auto_now=True)
     publishedAt = models.DateTimeField(blank=True, null=True)
-    authorName = models.CharField(max_length=50)
+    authorName = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     class Meta:
@@ -37,7 +37,7 @@ class Blog(models.Model):
 
 class Comment(models.Model):
     content = RichTextUploadingField()
-    userName = models.CharField(max_length=50)
+    userName = models.CharField(max_length=100)
     timePosted = models.DateTimeField(auto_now_add=True)
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
 
@@ -55,10 +55,4 @@ class Image(models.Model):
     blog = models.ForeignKey(Blog, default=None, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name + self.imageType
-
-
-# get all ----------------------------------------done [(Pagination) query limit, offset]   
-# get particlu :id -------------------------------done
-# get comments on a blog (blog id)
-# create comment (blog id)
+        return self.name
