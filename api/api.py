@@ -52,7 +52,8 @@ class CommentDetailView(APIView):
         
 class AppBlogListView(APIView): # Pagination
     def get(self, request, pageno):
-        page_size = 10
-        queryset = Blog.objects.all().order_by("-timePosted")[page_size*pageno: page_size*pageno + page_size]
+        pageno = int (pageno)
+        page_size = 5
+        queryset = Blog.objects.all().order_by("-publishedAt")[page_size*pageno: page_size*pageno + page_size]
         serializer = BlogSerializer(queryset, many=True)
         return Response(serializer.data)
