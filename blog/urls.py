@@ -8,7 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('blogs/', BlogView.as_view(), name='blogs',),
     path('blogs/<id>', BlogDetailView.as_view(), name = 'blog_details'),
-    path('blogs_list/(<int:pageno>/', AppBlogListView.as_view(), name = 'blog_paginated_list'),
+    path('blogs_list/<pageno>/', AppBlogListView.as_view(), name = 'blog_paginated_list'),
     path('comments/<blog_id>', CommentView.as_view(), name='comments',),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('comments/details/<id>', CommentDetailView.as_view(), name = 'comment_details'),
